@@ -3,7 +3,7 @@ import java.io.BufferedReader
 import java.nio.file.Paths
 
 val javaVersion = 17
-val minecraftVersion = "1.19.4"
+val minecraftVersion = "1.20.4"
 
 fun runCommand(command: Array<String>) = Runtime
     .getRuntime()
