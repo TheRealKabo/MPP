@@ -39,7 +39,7 @@ class ArmorListener : Listener {
     // This method is planned for subsequent updates
     @EventHandler
     fun playerEquipArmor(event: PlayerArmorChangeEvent) {
-        val armorPiece = event.newItem ?: return
+        val armorPiece = event.newItem
         val armorPieceItem = ItemRegistry.getItemFromItemstack(armorPiece) ?: return
 
         if (armorPieceItem is Armors) {

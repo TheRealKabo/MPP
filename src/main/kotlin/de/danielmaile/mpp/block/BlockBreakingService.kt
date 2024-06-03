@@ -36,8 +36,8 @@ import net.minecraft.network.protocol.game.ClientboundRemoveMobEffectPacket
 import net.minecraft.network.protocol.game.ClientboundUpdateMobEffectPacket
 import net.minecraft.network.protocol.game.ServerboundPlayerActionPacket
 import net.minecraft.network.protocol.game.ServerboundPlayerActionPacket.Action
-import net.minecraft.world.effect.MobEffect
 import net.minecraft.world.effect.MobEffectInstance
+import net.minecraft.world.effect.MobEffects
 import org.bukkit.Bukkit
 import org.bukkit.GameMode
 import org.bukkit.Material
@@ -48,7 +48,7 @@ import org.bukkit.inventory.meta.Damageable
 import org.bukkit.potion.PotionEffectType
 import kotlin.random.Random
 
-private val MINING_FATIGUE = MobEffectInstance(MobEffect.byId(4)!!, Integer.MAX_VALUE, 255, false, false, false)
+private val MINING_FATIGUE = MobEffectInstance(MobEffects.DIG_SLOWDOWN, Integer.MAX_VALUE, 255, false, false, false)
 
 object BlockBreakingService {
     private val damagedBlocks: HashMap<Player, DamagedBlock> = HashMap()
@@ -150,7 +150,7 @@ object BlockBreakingService {
             // the player might actually have mining fatigue.
             // in this case, it is important to copy the hasIcon value to prevent it from disappearing.
             val effectInstance = MobEffectInstance(
-                MobEffect.byId(4)!!,
+                MobEffects.DIG_SLOWDOWN,
                 Int.MAX_VALUE,
                 255,
                 effect.isAmbient,
@@ -171,7 +171,7 @@ object BlockBreakingService {
         val packet = if (effect != null) {
             // if the player actually has mining fatigue, send the correct effect again
             val effectInstance = MobEffectInstance(
-                MobEffect.byId(4)!!,
+                MobEffects.DIG_SLOWDOWN,
                 effect.duration,
                 effect.amplifier,
                 effect.isAmbient,
@@ -181,7 +181,7 @@ object BlockBreakingService {
             ClientboundUpdateMobEffectPacket(this.entityId, effectInstance)
         } else {
             // remove the effect
-            ClientboundRemoveMobEffectPacket(this.entityId, MobEffect.byId(4)!!)
+            ClientboundRemoveMobEffectPacket(this.entityId, MobEffects.DIG_SLOWDOWN)
         }
 
         PacketHandler.sendPacket(this, packet)
